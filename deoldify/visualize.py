@@ -66,6 +66,7 @@ class ModelImageVisualizer:
         img = PIL.Image.open(BytesIO(response.content)).convert('RGB')
         return img
 
+    # get img from url, save it to path and plot transformed image
     def plot_transformed_image_from_url(
         self,
         url: str,
@@ -86,10 +87,11 @@ class ModelImageVisualizer:
             render_factor=render_factor,
             display_render_factor=display_render_factor,
             compare=compare,
-            post_process = post_process,
+            post_process=post_process,
             watermarked=watermarked,
         )
 
+    #
     def plot_transformed_image(
         self,
         path: str,
@@ -380,7 +382,7 @@ def get_stable_video_colorizer(
     vis = ModelImageVisualizer(filtr, results_dir=results_dir)
     return VideoColorizer(vis)
 
-
+# create artistic or stable image colorizer
 def get_image_colorizer(
     render_factor: int = 35, artistic: bool = True
 ) -> ModelImageVisualizer:
@@ -412,11 +414,6 @@ def get_artistic_image_colorizer(
     filtr = MasterFilter([ColorizerFilter(learn=learn)], render_factor=render_factor)
     vis = ModelImageVisualizer(filtr, results_dir=results_dir)
     return vis
-
-
-def show_image_in_notebook(image_path: Path):
-    ipythondisplay.display(ipythonimage(str(image_path)))
-
 
 def show_video_in_notebook(video_path: Path):
     video = io.open(video_path, 'r+b').read()
